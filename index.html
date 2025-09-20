@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name | Full Stack Developer & Cyber Forensics Student</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Your existing CSS */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            color: #f0f0f0;
+            background-color: #121212;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Live Background */
+        #particles-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            z-index: -1;
+            transform-origin: center center;
+            transition: transform 0.1s linear;
+        }
+        #particles-js {
+            width: 100%;
+            height: 100%;
+        }
+
+        header, main, footer {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+        }
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav a:hover { color: #00aaff; }
+
+        .hero {
+            height: 30vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 0.2s;
+            /* Added for 3D image perspective */
+            perspective: 1000px;
+            overflow: hidden; /* Hide overflowing spark effects */
+        }
+        .hero h1 { font-size: 26px; margin-bottom: 0.5rem; }
+        .hero p { font-size: 1.5rem; color: #aaa; }
+
+        /* Styles for the 3D image and sparks */
+        .cyber-programmer-container {
+            position: relative;
+            width: 400px; /* Adjust based on your desired image size */
+            height: 600px; /* Adjust based on your desired image size */
+            margin-top: 2rem;
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out; /* For mouse parallax */
+        }
+
+
+
+        /* Spark effects (overlaying on the image) */
+        .spark-effect {
+            position: absolute;
+            background: radial-gradient(circle, rgba(0,255,255,0.8) 0%, rgba(0,255,255,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: spark 1.5s ease-out infinite alternate;
+            z-index: 3; /* Keep sparks above image */
+        }
+
+        .spark-effect-1 { top: 25%; left: 30%; width: 20px; height: 20px; animation-delay: 0s; } /* Left Monitor */
+        .spark-effect-2 { top: 40%; left: 65%; width: 25px; height: 25px; animation-delay: 0.5s; } /* Right Monitor */
+        .spark-effect-3 { top: 55%; left: 50%; width: 15px; height: 15px; animation-delay: 1s; } /* Mid Console */
+        /* You can add more spark effects at different positions as needed */
+
+        @keyframes spark {
+            0% { opacity: 0; transform: scale(0.5); filter: brightness(1); }
+            50% { opacity: 1; transform: scale(1); filter: brightness(1.5); }
+            100% { opacity: 0; transform: scale(0.5); filter: brightness(1); }
+        }
+
+
+        .content-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1s ease forwards;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+        .content-section:nth-of-type(1) { animation-delay: 0.5s; }
+        .content-section:nth-of-type(2) { animation-delay: 0.8s; }
+        .content-section:nth-of-type(3) { animation-delay: 1.1s; }
+        .content-section:nth-of-type(4) { animation-delay: 1.4s; }
+
+        .content-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            border-bottom: 2px solid #00aaff;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .project-item {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.4s ease;
+        }
+        .project-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 1.7s;
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 0.8 rem; }
+            nav { text-align: center; flex-direction: row; display: flex;}
+            nav a { margin: 0.5rem 0; }
+            .cyber-programmer-container {
+                width: 300px; /* Adjust for smaller screens */
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-container">
+        <div id="particles-js"></div>
+    </div>
+
+    <header>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#education">Education</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="cyber-programmer-container" id="cyberProgrammer">
+                <div class="spark-effect spark-effect-1"></div>
+                <div class="spark-effect spark-effect-2"></div>
+                <div class="spark-effect spark-effect-3"></div>
+            </div>
+            <h1>AKAGTUSHI</h1>
+            <p>Full Stack Developer | Cyber Forensics Student</p>
+
+        </section>
+
+        <section id="about" class="content-section">
+            <h2>About Me</h2>
+            <p>I'm a passionate full stack developer with a strong foundation in both front-end and back-end technologies. I'm currently expanding my knowledge in the exciting field of Cyber Forensics to build more secure and robust applications.</p>
+        </section>
+
+        <section id="education" class="content-section">
+            <h2>Education</h2>
+            <div class="education-item">
+                <h3>Master of Technology in Cyber Forensics & Information Technology</h3>
+                <p>NIELIT Kohima | 2024- 2026</p>
+            </div><br>
+            <div class="education-item">
+                <h3>Master of Computer Applications</h3>
+                <p>St. Joseph University | 2022-2026</p>
+            </div><br>
+            <div class="education-item">
+                <h3>Master of Arts (Sociology)</h3>
+                <p>IGNOU | 2026</p>
+            </div>
+        </section>
+
+        <section id="projects" class="content-section">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-item">
+                    <h3>Full Stack Development</h3>
+                    <p>A full-stack student management system built with Laravel, PHP, React, JS and MySQL. Features secure user authentication.</p><br>
+                    <p>Site for <a href="soyimstudentsunion.org">Soyim Students' Union</a></p>
+                </div>
+                <div class="project-item">
+                    <h3>Releasing soon.</h3>
+                    <p>Site for <a href="#">MDFA</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Your Name. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // ParticlesJS configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 }},
+                "color": { "value": "#00aaff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00aaff", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 0.5, "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "window",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 140, "line_linked": { "opacity": 1 }},
+                    "push": { "particles_nb": 4 }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Rotate particles container on scroll
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const rotation = scrollY * 0.05; // adjust speed
+            document.getElementById('particles-container').style.transform = `rotate(${rotation}deg)`;
+        });
+
+        // JavaScript for subtle 3D tilt on mouse movement
+        const cyberProgrammer = document.getElementById('cyberProgrammer');
+
+        document.addEventListener('mousemove', (e) => {
+            const rect = cyberProgrammer.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const rotateX = ((e.clientY - centerY) / centerY) * 10; // Max 10 degrees tilt
+            const rotateY = ((e.clientX - centerX) / centerX) * -10; // Max 10 degrees tilt
+
+            cyberProgrammer.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+    </script>
+</body>
+</html>
